@@ -46,7 +46,7 @@ public:
         (*counter)--;
         if(*counter == 0)
         {
-            delete sharingToy;
+            sharingToy = nullptr;
         }
     }
 
@@ -114,7 +114,9 @@ int main()
         if(user_input == 'y') sobaka_a->getFavToy();
 
     };
-
+    
+    delete sobaka_a;
+    sobaka_a->getFavToy();
 
     return 0;
 }
