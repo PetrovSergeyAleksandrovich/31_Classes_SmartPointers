@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <memory>
 
 class Toy{
     std::string name;
@@ -51,20 +52,39 @@ class Dog
     std::string name;
     std::string toyName;
     int age;
-    smart_ptr_toy myToy;
+    std::shared_ptr<Toy> myToy;
+    std::shared_ptr<Dog> bestFriend;
 public:
-    Dog(std::string inName, std::string inToyName, int inAge) : name(inName), myToy(toyName)
+    Dog(std::string inName, std::shared_ptr<Toy> toy, int inAge) : name(inName), myToy(toy)
     {
         if(inAge >= 0 && inAge < 30) age = inAge;
     }
-    Dog() : Dog("Snow", "Toy", 0) {};
-    Dog(std::string inName) : Dog(inName, "Toy",  0) {};
-    Dog(int inAge) : Dog("Snow", "Toy", inAge) {};
+    Dog() : Dog("Snow", std::make_shared<Toy>("Toy"), 0) {};
+    Dog(std::string inName) : Dog(inName, std::make_shared<Toy>(inName),  0) {};
+    Dog(int inAge) : Dog("Snow", std::make_shared<Toy>("Toy"), inAge) {};
+
+    void copyToy(const Dog& other)
+    {
+        myToy = other.myToy;
+    }
+
+    void setBestFriend(std::shared_ptr<Dog> _friend)
+    {
+        bestFriend = _friend;
+    }
+
 };
 
 int main()
 {
-    Dog d("Druzok", "Ball", 3);
-    Dog q(d);
+    std::shared_ptr<Toy> ball = std::make_shared<Toy>("Ball");
+    std::shared_ptr<Toy> bone = std::make_shared<Toy>("Bone");
+
+    std::shared_ptr<Dog> a = std::make_shared<Dog>("Sharik", ball, 10);
+    std::shared_ptr<Dog> b = std::make_shared<Dog>("Druzok", ball, 11);
+    std::shared_ptr<Dog> c = std::make_shared<Dog>("Pushok", ball, 12);
+
+    std::cout << ball.use_count();
+
     return 0;
 }

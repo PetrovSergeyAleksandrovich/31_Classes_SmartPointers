@@ -1,49 +1,35 @@
-#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
 
-class A{
-    std::string name = "none";
-    int number = 1;
-public:
-    void setName(std::string inName)
-    {
-        name = inName;
-    };
+int matrix[20][20]; //матрица смежности изначально 0
+int count = 0;
 
-    std::string getName()
-    {
-        return name;
-    };
-
-    void setumber (int inNumber)
-    {
-        number = inNumber;
-    };
-
-    int getNumber()
-    {
-        return number;
-    };
-
-    ~A()
-    {
-        std::cout << name << " " << "destroyed" << std::endl;
+//следующая функция используется для вывода
+void displayMatrix(int v) {
+    int i, j;
+    for(i = 0; i < v; i++) {
+        for(j = 0; j < v; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
     }
-};
+}
 
-int main()
-{
-    A* a = new A;
-    A* b = new A;
+void add_edge(int u, int v){  //функция добавления ребра в матрицу
+    matrix[u][v] = 1;
+    matrix[v][u] = 1;
+}
 
-    //b = a;
-
-    b->setName("Carl");
-    a->setName("Mark");
-
-    std::cout << b->getName() << " " << b->getNumber() << std::endl;
-
-    delete a;
-    delete b;
-
-    return 0;
+int main(int argc, char* argv[]) {
+    int v = 6;    //в графе 6 вершин
+    add_edge(0, 4);
+    add_edge(0, 3);
+    add_edge(1, 2);
+    add_edge(1, 4);
+    add_edge(1, 5);
+    add_edge(2, 3);
+    add_edge(2, 5);
+    add_edge(5, 3);
+    add_edge(5, 4);
+    displayMatrix(v);
 }
