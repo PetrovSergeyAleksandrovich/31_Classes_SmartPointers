@@ -79,11 +79,17 @@ public:
     ~Dog()
     {
         myToy->reduceLink();
+        delete myToy;
     }
 
     void getFavToy()
     {
         myToy->getName();
+    }
+
+    void getSharedPtrToy()
+    {
+        std::cout << myToy << std::endl;
     }
 };
 
@@ -96,25 +102,41 @@ int main()
     shared_ptr_toy* ball = new shared_ptr_toy("ball", &(++counter));
 
     Dog* sobaka_a = new Dog("Pushok",ball);
+    Dog* sobaka_b = new Dog("Pushok",ball);
 
     while(counter > 0)
     {
         std::cout << "destroy toy? y/n: ";
         std::cin >> user_input;
-        if(user_input == 'y') delete ball;
+        if(user_input == 'y') ball = nullptr;
 
-        std::cout << "destroy dog a? y/n: ";
-        std::cin >> user_input;
-        if(user_input == 'y')  delete sobaka_a;
+        if(sobaka_a != nullptr)
+        {
+            std::cout << "destroy dog A? y/n: ";
+            std::cin >> user_input;
+            if(user_input == 'y')  sobaka_a = nullptr;
+        }
+
+        if(sobaka_b != nullptr)
+        {
+            std::cout << "destroy dog B? y/n: ";
+            std::cin >> user_input;
+            if (user_input == 'y') sobaka_b = nullptr;
+        }
 
         std::cout << "links: " << counter << std::endl;
 
-        std::cout << "get favorite toy name? y/n: ";
+        std::cout << "get favorite toy name at A? y/n: ";
         std::cin >> user_input;
         if(user_input == 'y') sobaka_a->getFavToy();
 
+        std::cout << "results:\n";
+        sobaka_a->getSharedPtrToy();
+        sobaka_b->getSharedPtrToy();
+        std::cout << ball << std::endl;
+
     };
-    
+
     delete sobaka_a;
     sobaka_a->getFavToy();
 
