@@ -60,11 +60,11 @@ public:
         std::cout << "MatrixGraph created " << matrix[0] << std::endl;
     }
 
-    MatrixGraph(const MatrixGraph* other)
+    MatrixGraph(const MatrixGraph& other)
     {
         std::cout << "Graph copied " << std::endl;
-        side = other->side;
-        matrix = other->matrix;
+        side = other.side;
+        matrix = other.matrix;
     }
 
     ~MatrixGraph()
@@ -185,13 +185,11 @@ int main() {
 
     //delete my_graph;
 
-    my_graph->AddEdge(2,5);
+    test_graph ->AddEdge(2,5);
     test_graph->printMatrix();
     test_graph->VerticesCount();
-    test_graph->GetNextVertices(5);
-    test_graph->GetPrevVertices(2);
-
-    my_graph->printMatrix();
+    test_graph->GetNextVertices(2);
+    test_graph->GetPrevVertices(5);
 
     delete test_graph;
 
